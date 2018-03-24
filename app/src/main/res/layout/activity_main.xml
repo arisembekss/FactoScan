@@ -24,12 +24,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Pause"
-            android:onClick="pause" />
+            android:onClick="pause"
+            android:visibility="invisible"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Resume"
+            android:text="Save"
             android:onClick="resume" />
     </LinearLayout>
 
@@ -39,13 +40,21 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/centerHorizont" />
 
-    <ImageView
+    <!--<ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/centerHorizont"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@id/buttonsLayout"
-        android:id="@+id/barcodePreview" />
+        android:id="@+id/barcodePreview" />-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/centerHorizont"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/buttonsLayout"
+        android:id="@+id/tPrev"/>
 
 </RelativeLayout>
