@@ -27,7 +27,11 @@
             android:text="Save"
             android:onClick="resume"
             android:id="@+id/btsave"
+            android:background="@drawable/ripple_1"
             android:visibility="invisible"/>
+        <View
+            android:layout_width="8dp"
+            android:layout_height="3dp"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,6 +39,7 @@
             android:text="Next"
             android:onClick="next"
             android:id="@+id/btnext"
+            android:background="@drawable/ripple_1"
             android:visibility="invisible"/>
 
 
@@ -54,16 +59,24 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@id/buttonsLayout"
         android:id="@+id/barcodePreview" />-->
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_above="@+id/buttonsLayout"
         android:id="@+id/rprev">
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:id="@+id/tPrev"/>
-    </RelativeLayout>
+            android:layout_height="175dp"
+            android:padding="15dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/tPrev"/>
+        </RelativeLayout>
+
+    </ScrollView>
 
 
 </RelativeLayout>

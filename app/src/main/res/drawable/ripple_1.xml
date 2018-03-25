@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<inset
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="14dp"
+    android:insetTop="10dp"
+    android:insetRight="14dp"
+    android:insetBottom="10dp">
+    <layer-list>
+        <!-- Shadow. -->
+        <item
+            android:drawable="@drawable/button_shadow"
+            android:top="-0dp"
+            android:bottom="-1dp"
+            android:left="-0dp"
+            android:right="-0dp"/>
+        <item
+            android:drawable="@drawable/button_shadow_pressable"
+            android:top="-0dp"
+            android:bottom="-3dp"
+            android:left="-1dp"
+            android:right="-1dp"/>
+        <!-- Background. -->
+        <item android:drawable="@drawable/button_shape_normal"/>
+        <!-- Highlight. -->
+        <item>
+            <selector
+                android:enterFadeDuration="@integer/button_pressed_animation_duration"
+                android:exitFadeDuration="@integer/button_pressed_animation_duration">
+
+                <item
+                    android:drawable="@drawable/button_shape_highlight"
+                    android:state_focused="true"
+                    android:state_enabled="true"/>
+                <item
+                    android:drawable="@drawable/button_shape_highlight"
+                    android:state_pressed="true"
+                    android:state_enabled="true"/>
+                <item
+                    android:drawable="@drawable/button_shape_highlight"
+                    android:state_selected="true"
+                    android:state_enabled="true"/>
+                <item android:drawable="@android:color/transparent"/>
+            </selector>
+        </item>
+        <!-- Inner padding. -->
+        <item android:drawable="@drawable/button_padding"/>
+    </layer-list>
+</inset>
