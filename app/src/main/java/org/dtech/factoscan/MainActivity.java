@@ -1,15 +1,19 @@
 package org.dtech.factoscan;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,13 +25,9 @@ import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 
-
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,9 +41,14 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private DecoratedBarcodeView barcodeView;
     private Button btnext, btsave;
+    private ScrollView scrollView;
+    private TextView tprev;
     private BeepManager beepManager;
     private String lastText;
     final List<String> arrayscan = new ArrayList<>();
+    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 375);
+    RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 180);
+    FloatingActionButton fab;
     String sscan;
 
     private BarcodeCallback callback = new BarcodeCallback() {
@@ -66,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             imageView.setImageBitmap(result.getBitmapWithResultPoints(Color.YELLOW));*/
             arrayscan.add(result.getText());
             sscan= TextUtils.join("\n", arrayscan);
-            TextView tprev = (TextView) findViewById(R.id.tPrev);
+            tprev = findViewById(R.id.tPrev);
             tprev.setText(sscan);
 
         }
@@ -79,11 +84,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
         barcodeView = findViewById(R.id.barcode_scanner);
         btnext = findViewById(R.id.btnext);
         btsave = findViewById(R.id.btsave);
+        scrollView = findViewById(R.id.rprev);
+
+        fab =  findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                /*barcodeView.setVisibility(View.INVISIBLE);
+                scrollView.setLayoutParams(params);
+                btnext.setText("Resume");
+                fab.setVisibility(View.INVISIBLE);*/
+            }
+        });
         Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
         barcodeView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
         barcodeView.decodeContinuous(callback);
@@ -106,7 +125,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void next(View view) {
-        barcodeView.resume();
+        if (btnext.getText().equals("Next")) {
+            barcodeView.resume();
+        } else {
+            /*barcodeView.setVisibility(View.VISIBLE);
+            scrollView.setLayoutParams(params2);
+
+            btnext.setText("Next");
+            fab.setVisibility(View.VISIBLE);*/
+        }
+
     }
 
     public void resume(View view) {
@@ -139,44 +167,6 @@ public class MainActivity extends AppCompatActivity {
         return barcodeView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
     }
 
-    public boolean fileExistance(String fname){
-        File file = getBaseContext().getFileStreamPath(fname);
-        return file.exists();
-    }
-
-    public void generateFile(Context context, String fileName, String body) {
-        try {
-            FileOutputStream fOut = openFileOutput(fileName+".txt",
-                    MODE_PRIVATE);
-            OutputStreamWriter osw = new OutputStreamWriter(fOut);
-
-            // Write the string to the file
-            osw.write(body);
-                        /* ensure that everything is
-                         * really written out and close */
-            osw.flush();
-            osw.close();
-            Toast.makeText(context, "Sukses", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        /*try {
-            File root = new File(Environment.getExternalStorageDirectory(), "Facto-Scan");
-            if (!root.exists()) {
-                root.mkdirs();
-            }
-            File sFile = new File(*//*context.getFilesDir()*//*root, fileName+".txt");
-            FileWriter writer = new FileWriter(sFile);
-            writer.append(body);
-            writer.flush();
-            writer.close();
-            Toast.makeText(context, "Sukses", Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-    }
-
     public void savePublic(Context context, String body) {
         Date now = Calendar.getInstance().getTime();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd-hh.mm.ss");
@@ -192,6 +182,11 @@ public class MainActivity extends AppCompatActivity {
             writer.flush();
             writer.close();
             Toast.makeText(context, "Sukses", Toast.LENGTH_LONG).show();
+            tprev.setText("");
+            arrayscan.clear();
+            btnext.setVisibility(View.INVISIBLE);
+            btsave.setVisibility(View.INVISIBLE);
+            barcodeView.resume();
         } catch (IOException e) {
             e.printStackTrace();
         }

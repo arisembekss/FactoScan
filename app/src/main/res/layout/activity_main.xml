@@ -40,7 +40,7 @@
             android:onClick="next"
             android:id="@+id/btnext"
             android:background="@drawable/ripple_1"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
 
 
     </LinearLayout>
