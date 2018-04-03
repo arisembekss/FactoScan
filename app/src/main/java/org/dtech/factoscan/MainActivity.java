@@ -6,7 +6,10 @@ import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +48,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView tprev;
     private BeepManager beepManager;
     private String lastText;
-    final List<String> arrayscan = new ArrayList<>();
+    Context context;
+    RecyclerView recyclerView;
+    AdapterQr mAdapter;
+    String[] dum = {"tes", "dum"};
+    List<String> arrayscan = new ArrayList<>();
     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 375);
     RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 180);
     FloatingActionButton fab;
@@ -70,9 +77,10 @@ public class MainActivity extends AppCompatActivity {
             /*ImageView imageView = findViewById(R.id.barcodePreview);
             imageView.setImageBitmap(result.getBitmapWithResultPoints(Color.YELLOW));*/
             arrayscan.add(result.getText());
-            sscan= TextUtils.join("\n", arrayscan);
-            tprev = findViewById(R.id.tPrev);
-            tprev.setText(sscan);
+            mAdapter.notifyItemInserted(arrayscan.size()-1);
+
+            /*tprev = findViewById(R.id.tPrev);
+            tprev.setText(sscan);*/
 
         }
 
@@ -84,25 +92,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_main);
 
+        //arrayscan = new ArrayList(Arrays.asList(dum));
+        mAdapter = new AdapterQr(MainActivity.this, arrayscan);
         barcodeView = findViewById(R.id.barcode_scanner);
         btnext = findViewById(R.id.btnext);
         btsave = findViewById(R.id.btsave);
         scrollView = findViewById(R.id.rprev);
+        recyclerView = findViewById(R.id.recy);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        fab =  findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                /*barcodeView.setVisibility(View.INVISIBLE);
-                scrollView.setLayoutParams(params);
-                btnext.setText("Resume");
-                fab.setVisibility(View.INVISIBLE);*/
-            }
-        });
         Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
         barcodeView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
         barcodeView.decodeContinuous(callback);
@@ -125,36 +126,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void next(View view) {
-        if (btnext.getText().equals("Next")) {
-            barcodeView.resume();
-        } else {
-            /*barcodeView.setVisibility(View.VISIBLE);
-            scrollView.setLayoutParams(params2);
 
-            btnext.setText("Next");
-            fab.setVisibility(View.VISIBLE);*/
-        }
+        barcodeView.resume();
 
     }
 
     public void resume(View view) {
-        //barcodeView.resume();
-        /*if (!fileExistance(Config.FIRST_TIME)) {
-            launchWelcome();
-        } else {
-            new Loading().execute();
-        }*/
 
-        /*FileOutputStream outputStream;
-
-        try {
-            outputStream = openFileOutput("save-scan", Context.MODE_PRIVATE);
-            outputStream.write(sscan.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
+        sscan= TextUtils.join("\n", arrayscan);
+        Log.d(TAG, "resume: "+sscan);
         savePublic(MainActivity.this,  sscan);
     }
 
@@ -182,8 +162,10 @@ public class MainActivity extends AppCompatActivity {
             writer.flush();
             writer.close();
             Toast.makeText(context, "Sukses", Toast.LENGTH_LONG).show();
-            tprev.setText("");
+            //tprev.setText("");
             arrayscan.clear();
+
+            mAdapter.notifyDataSetChanged();
             btnext.setVisibility(View.INVISIBLE);
             btsave.setVisibility(View.INVISIBLE);
             barcodeView.resume();

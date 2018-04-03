@@ -5,4 +5,5 @@ package org.dtech.factoscan;
  */
 
 public class DataQr {
+    public String tview;
 }

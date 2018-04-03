@@ -40,7 +40,7 @@
             android:onClick="next"
             android:id="@+id/btnext"
             android:background="@drawable/ripple_1"
-            android:visibility="visible"/>
+            android:visibility="invisible"/>
 
 
     </LinearLayout>
@@ -71,9 +71,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="false"
+                android:layout_centerVertical="false"
+                android:visibility="gone"
                 android:id="@+id/tPrev"/>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:id="@+id/recy"
+                android:layout_below="@id/tPrev"
+
+                >
+
+            </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
 
     </ScrollView>

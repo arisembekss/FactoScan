@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.25"
+        android:layout_marginTop="8dp"
+        android:id="@+id/tt"/>
+    <ImageButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.75"
+        android:id="@+id/imgDel"
+        android:background="@android:color/transparent"
+        android:src="@android:drawable/ic_menu_delete"/>
+    <!--<android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/lin">
+
+                <TextView
+                    android:id="@+id/tt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.25" />
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.75"
+                    android:id="@+id/imgDel"
+
+                    android:src="@android:drawable/ic_menu_delete"/>
+            </LinearLayout>
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/lin"
+                android:padding="10dp"/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>-->
+</LinearLayout>
